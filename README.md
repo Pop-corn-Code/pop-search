@@ -41,3 +41,6 @@ It uses the [Next.js](https://nextjs.org/) framework with [React](https://reactj
    ```
 
 You should now be able to access the app at [http://localhost:3000](http://localhost:3000)!
+
+
+## ## Note: In this branch we used Gemini API for the message generation and all
