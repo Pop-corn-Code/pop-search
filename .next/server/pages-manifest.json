@@ -1,6 +1,6 @@
 {
-  "/_error": "pages/_error.js",
   "/_app": "pages/_app.js",
+  "/_error": "pages/_error.js",
   "/api/gemini-generate": "pages/api/gemini-generate.js",
   "/api/generate": "pages/api/generate.js",
   "/index copy": "pages/index copy.html",
