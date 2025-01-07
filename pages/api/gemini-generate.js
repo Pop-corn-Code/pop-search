@@ -43,7 +43,7 @@ export default async function (req, res) {
         const result = await model.generateContent(prompt);
 
         // Send the response back
-        console.log(result.response.text())
+        // console.log(result.response.text())
         res.status(200).json({ result: result.response.text() });
     } catch (error) {
         res.status(500).json({ error: error.message });
