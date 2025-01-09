@@ -18,8 +18,8 @@ import { GoogleGenerativeAI } from "@google/generative-ai";
   5 - Handle API responses and errors
 */
 
-const apiKey = process.env.REACT_APP_OPENAI_API_KEY;
-console.log(apiKey); // Logs your API key
+// const apiKey = process.env.REACT_APP_OPENAI_API_KEY;
+const apiKey = "AIzaSyCBgBFtYb-hkScQBi4wr0HGa-HpuRqNjmM";
 
 const genAI = new GoogleGenerativeAI(apiKey);
 
