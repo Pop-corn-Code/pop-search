@@ -31,7 +31,7 @@ export default function Home() {
   const [input, setInput] = useState("");
 
   async function generate() {
-    const response = await fetch("/api/gemini-generate", {
+    const response = await fetch("/api/generate", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
