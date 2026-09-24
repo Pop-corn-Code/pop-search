@@ -1,0 +1,137 @@
+.backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(31, 41, 55, 0.35);
+  z-index: 45;
+}
+
+.panel {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 300px;
+  max-width: 85vw;
+  background: var(--pop-paper);
+  border-right: 3px solid var(--pop-ink);
+  z-index: 50;
+  transform: translateX(-100%);
+  transition: transform 0.2s ease;
+  display: flex;
+  flex-direction: column;
+  padding: 18px;
+}
+
+.panelOpen {
+  transform: translateX(0);
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px;
+}
+
+.title {
+  font-family: var(--pop-display);
+  font-size: 19px;
+  margin: 0;
+}
+
+.closeBtn {
+  border: 2px solid var(--pop-ink);
+  background: var(--pop-paper);
+  border-radius: 6px;
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
+  font-size: 13px;
+  color: var(--pop-ink);
+}
+
+.empty {
+  font-size: 14px;
+  color: var(--pop-ink-soft);
+  line-height: 1.5;
+}
+
+.list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  overflow-y: auto;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.item {
+  display: flex;
+  align-items: stretch;
+  gap: 6px;
+}
+
+.itemQuery {
+  flex: 1;
+  text-align: left;
+  background: var(--pop-panel);
+  border: 2px solid var(--pop-ink);
+  border-radius: 8px;
+  padding: 8px 10px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  color: var(--pop-ink);
+}
+
+.itemQuery:hover {
+  background: var(--pop-yellow);
+}
+
+.itemText {
+  font-size: 14px;
+  font-weight: 600;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.itemTime {
+  font-size: 11px;
+  color: var(--pop-ink-soft);
+}
+
+.removeBtn {
+  border: 2px solid var(--pop-ink);
+  border-radius: 8px;
+  background: var(--pop-paper);
+  color: var(--pop-ink);
+  width: 30px;
+  cursor: pointer;
+  font-size: 12px;
+}
+
+.removeBtn:hover {
+  background: var(--pop-coral);
+  color: #fff;
+}
+
+.clearBtn {
+  margin-top: 14px;
+  border: 2.5px solid var(--pop-ink);
+  border-radius: 8px;
+  background: var(--pop-paper);
+  padding: 10px;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 3px 3px 0 var(--pop-ink);
+  color: var(--pop-ink);
+}
+
+.clearBtn:hover {
+  background: var(--pop-coral);
+  color: #fff;
+}

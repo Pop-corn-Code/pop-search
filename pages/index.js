@@ -1,25 +1,27 @@
 import Head from "next/head";
 import { useState, useRef, useEffect } from "react";
 import styles from "./index.module.css";
-import Prism from "prismjs"; // For syntax highlighting
-import "prismjs/themes/prism-tomorrow.css"; // Prism.js theme for syntax highlighting
-import ReactMarkdown from 'react-markdown';
+import Prism from "prismjs";
+import ReactMarkdown from "react-markdown";
+import HistorySidebar from "../components/HistorySidebar";
+import { useApp } from "../context/AppContext";
 
 const Loading = ({ isVisible }) =>
-  isVisible && <h2 className="mt-4 text-center">Loading ...</h2>;
+  isVisible && <p className={styles.loading}>Searching …</p>;
 
 const Result = ({ result, isVisible }) => {
   useEffect(() => {
     if (result) {
-      Prism.highlightAll(); // Highlight syntax when the result updates
+      Prism.highlightAll();
     }
   }, [result]);
 
   return (
-    isVisible && (
-      <p className="mt-5 " style={{ width: "60%", textAlign: "justify" }}>
-          <ReactMarkdown>{result}</ReactMarkdown>
-      </p>
+    isVisible &&
+    result && (
+      <div className={styles.resultCard}>
+        <ReactMarkdown>{result}</ReactMarkdown>
+      </div>
     )
   );
 };
@@ -29,14 +31,15 @@ export default function Home() {
   const [isPending, setLoading] = useState(false);
   const [result, setResult] = useState(null);
   const [input, setInput] = useState("");
+  const { addHistoryItem } = useApp();
 
-  async function generate() {
-    const response = await fetch("/api/generate", {
+  async function generate(query) {
+    const response = await fetch("/api/gemini-generate", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ input }),
+      body: JSON.stringify({ input: query }),
     });
     const data = await response.json();
     if (response.status !== 200) {
@@ -47,51 +50,60 @@ export default function Home() {
     return { result: data.result };
   }
 
-  async function handleOnSubmit(event) {
-    event.preventDefault();
+  async function runSearch(query) {
+    if (!query || !query.trim()) return;
     setLoading(true);
+    setResult(null);
     try {
-      const data = await generate();
+      const data = await generate(query);
       setResult(data.result);
-      setLoading(false);
-      ref.current.value = null;
+      addHistoryItem(query.trim());
     } catch (error) {
       console.error(error);
+      setResult("Something went wrong with that search. Please try again.");
+    } finally {
       setLoading(false);
     }
+  }
+
+  async function handleOnSubmit(event) {
+    event.preventDefault();
+    await runSearch(input);
+  }
+
+  function handleHistorySelect(query) {
+    setInput(query);
+    if (ref.current) ref.current.value = query;
+    runSearch(query);
   }
 
   return (
     <div>
       <Head>
-        <title> 🔍 - OpenAI-Pop Search</title>
-        <link
-          href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
-          rel="stylesheet"
-          integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
-          crossOrigin="anonymous"
-        />
+        <title>Pop&apos;con&apos;s Search</title>
       </Head>
 
+      <HistorySidebar onSelect={handleHistorySelect} />
+
       <main className={styles.main}>
-        <h3>
-          <span style={{ color: "#1abc9c" }}>Pop</span>
-          <span style={{ color: "#e74c3c" }}>~co</span>
-          <span style={{ color: "#f1c40f", fontSize: "20px" }}>⭐</span>
-          <span style={{ color: "#e74c3c" }}>n's </span>
-          <span style={{ color: "#f1c40f" }}>Search</span>
-        </h3>
-        <form onSubmit={handleOnSubmit}>
+        <p className={styles.tagline}>Ask it anything. It&apos;ll pop right back.</p>
+
+        <form className={styles.form} onSubmit={handleOnSubmit}>
           <input
             ref={ref}
+            className={styles.input}
             type="text"
             name="title"
-            placeholder="search ..."
+            placeholder="search …"
+            value={input}
             onChange={(e) => setInput(e.target.value)}
           />
-          <button type="submit">Search</button>
+          <button className={styles.submitBtn} type="submit">
+            Search
+          </button>
         </form>
-        <Loading isVisible={isPending} input={input} />
+
+        <Loading isVisible={isPending} />
         <Result isVisible={!isPending} result={result} />
       </main>
     </div>

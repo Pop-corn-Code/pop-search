@@ -1,0 +1,41 @@
+@import url("https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&display=swap");
+
+:root {
+  --pop-ink: #1f2937;
+  --pop-ink-soft: #6b7280;
+  --pop-paper: #fffdf7;
+  --pop-panel: #ffffff;
+  --pop-teal: #1abc9c;
+  --pop-coral: #e74c3c;
+  --pop-yellow: #f1c40f;
+  --pop-display: "Fredoka", "Segoe UI", sans-serif;
+}
+
+[data-theme="dark"] {
+  --pop-ink: #f4f1ea;
+  --pop-ink-soft: #9aa3af;
+  --pop-paper: #14181f;
+  --pop-panel: #1f2530;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  padding: 0;
+  margin: 0;
+  background: var(--pop-paper);
+  color: var(--pop-ink);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+a {
+  color: inherit;
+}
+
+button {
+  font-family: inherit;
+}
